@@ -8,7 +8,7 @@
 require('./bootstrap');
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css'
-
+import axios from 'axios'
 
 window.Vue = require('vue');
 
@@ -21,6 +21,9 @@ Vue.use(ElementUI);
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('sidebar', require('./components/sidebar.vue'));
 Vue.component('knows', require('./components/knows.vue'));
+Vue.prototype.$http = axios;
+
+axios.defaults.baseURL = "http://localhost:8000";
 const app = new Vue({
     el: '#app'
 });
