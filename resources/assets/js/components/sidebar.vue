@@ -1,5 +1,6 @@
 <template>
-  <el-aside style="background-color: rgb(238, 241, 246)">
+<el-row>
+<el-col :span="3" :offset="3">
     <el-menu>
         <el-submenu index="1">
           <template slot="title">试题管理</template>
@@ -16,20 +17,27 @@
         </el-submenu>
 
     </el-menu>
-  </el-aside>
+</el-col>
+<el-col :span="6" :offset="1" class="toolbar">
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+  <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+  <el-breadcrumb-item>{{test}}</el-breadcrumb-item>
+  <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+  </el-breadcrumb>
+</el-col>
+</el-row>
 </template>
 
 <script>
   export default {
     data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
       return {
-        tableData: Array(20).fill(item)
+        test: "dfdf"
       }
     }
   };
 </script>
+<style scoped>
+
+</style>

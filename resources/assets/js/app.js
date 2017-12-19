@@ -20,6 +20,7 @@ window.Vue = require('vue');
 Vue.use(ElementUI);
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('sidebar', require('./components/sidebar.vue'));
+Vue.component('knows', require('./components/knows.vue'));
 const app = new Vue({
     el: '#app'
 });

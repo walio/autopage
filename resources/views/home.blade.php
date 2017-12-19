@@ -2,5 +2,10 @@
 
 @section('content')
     <sidebar></sidebar>
-    <example-component></example-component>
+
+    @if (Request::path()==="subject")
+        <knows></knows>
+    @elseif (Request::path()==="home")
+        <example-component></example-component>
+    @endif
 @endsection
