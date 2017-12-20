@@ -50,9 +50,7 @@ class KnowsController extends Controller
         //
         $childKnows = KnowsModel::where('parentid',$id)->get();
         return $childKnows;
-        foreach ($childKnows as $know) {
-            return $know->content;
-        }
+
     }
 
     /**
