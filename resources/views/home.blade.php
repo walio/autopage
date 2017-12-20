@@ -1,11 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <sidebar></sidebar>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Dashboard</div>
 
-    @if (Request::path()==="subject")
-        <knows></knows>
-    @elseif (Request::path()==="home")
-        <example-component></example-component>
-    @endif
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    You are logged in!
+                    <div id="example"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

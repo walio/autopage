@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\exam;
+namespace App\Http\Controllers\Exam;
 
-use app\knowledge;
+use App\Knows as KnowsModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class knows extends Controller
+class KnowsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,14 +45,14 @@ class knows extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-      $knows = App\knowledge::all();
-
-      foreach ($know as $knows) {
-        echo $know->content;
-      }
         //
+        $childKnows = KnowsModel::where('parentid',$id)->get();
+        return $childKnows;
+        foreach ($childKnows as $know) {
+            return $know->content;
+        }
     }
 
     /**
