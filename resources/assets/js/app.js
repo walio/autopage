@@ -13,6 +13,6 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Sidebar');
-require('./components/Knows');
+require('./components/Sidebar.jsx');
+require('./components/Knows.jsx');
 

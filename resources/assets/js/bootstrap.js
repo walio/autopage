@@ -12,7 +12,7 @@ try {
 
     require('bootstrap-sass');
 } catch (e) {}
-
+require('font-awesome/css/font-awesome.css');
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -52,8 +52,25 @@ if (token) {
 //     key: 'your-pusher-key'
 // });
 
+//
 window.GetQueryString = (name) =>{
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if(r!=null)return  unescape(r[2]); return null;
+    let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    let r = window.location.search.substr(1).match(reg);
+    if(r)return  unescape(r[2]); return null;
 };
+
+$(()=>{
+    $(".ajax_delete").click((e)=>{
+        e.preventDefault()
+        $.delete({
+            type:'delete',
+            url: $(this).attr('href'),
+            success: () => {
+                location.reload(true);
+            },
+            error: () => {
+                $('#failModal').data('msg', '无法删除').modal('show');
+            }
+        })
+    })
+});

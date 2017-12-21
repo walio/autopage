@@ -5,9 +5,28 @@ import 'bootstrap-table'
 export default class Knows extends Component {
     componentDidMount() {
         $('#table123').bootstrapTable({
-            field: 'content',
-            title: '序号',
-            width: "75px"
+            columns: [{
+                field: 'Id',
+                title: 'id',
+                width: '35%'
+            },{
+                field: 'content',
+                title: '内容',
+                width: '35%',
+            },{
+                field: 'Id',
+                title: '操作',
+                width: '30%',
+                formatter: (value, row, index) => {
+                    return [
+                        '<div class="btn-group">',
+                        `<a class="btn fa fa-list" href="/subject?knowsid=${value}" title="章节列表"></a>`,
+                        `<a class="btn fa fa-edit" href="/subject_modify?knowsid=${value}" title="修改科目信息"></a>`,
+                        '<a class="btn ajax_delete fa fa-remove" href="/api/knows" title="删除科目"></a>',
+                        '</div>',
+                    ].join('');
+                }
+            },]
         })
     }
     render() {

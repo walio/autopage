@@ -70,20 +70,7 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="col-md-2">
-                    <div id="Sidebar" style="margin-top:10px;"></div>
-                </div>
-                <div class="col-md-10">
-                    <ul class="breadcrumb">
-                        <li>test</li>
-                        <li>test</li>
-                    </ul>
-                    @yield('content')
-                </div>
-            </div>
-        </div>
+        @yield('content')
     </div>
 
     <!-- Scripts -->

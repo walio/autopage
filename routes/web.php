@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/subject', function () {
+    return view('Exam\home');
+});
 
 Route::resource('api/knows','Exam\KnowsController');
