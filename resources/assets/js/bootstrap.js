@@ -60,17 +60,22 @@ window.GetQueryString = (name) =>{
 };
 
 $(()=>{
-    $(".ajax_delete").click((e)=>{
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $(document).on('click','.ajax_delete',(e) => {
         e.preventDefault()
-        $.delete({
+        $.ajax({
             type:'delete',
-            url: $(this).attr('href'),
-            success: () => {
-                location.reload(true);
+            url: $(e.target).attr('href'),
+            success: (data, textStatus) => {
+                console.log(data)
+                //location.reload(true);
             },
-            error: () => {
-                $('#failModal').data('msg', '无法删除').modal('show');
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.log(jqXHR.responseText)
+                let failModal = $('#failModal')
+                failModal.find(".modal-content").text(errorThrown);
+                failModal.modal('show');
             }
         })
-    })
-});
+    });
+})

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 
-function Sidebar(props) {
+export default (props) => {
         return (
             <div>
                 <div className="panel-group" id="accordion">
@@ -44,9 +43,3 @@ function Sidebar(props) {
             </div>
         );
     }
-
-
-if (document.getElementById('Sidebar')) {
-    ReactDOM.render(<Sidebar />, document.getElementById('Sidebar'));
-}
-

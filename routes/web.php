@@ -20,5 +20,7 @@ Auth::routes();
 Route::get('/subject', function () {
     return view('Exam\home');
 });
-
+Route::get('/addSubject', function () {
+    return view('Exam\home');
+});
 Route::resource('api/knows','Exam\KnowsController');

@@ -23,6 +23,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-table": "^1.11.2",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
   }
 }
