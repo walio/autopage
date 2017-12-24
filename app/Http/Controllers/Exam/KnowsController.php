@@ -40,24 +40,20 @@ class KnowsController extends Controller
         //
         $p = $request->input('parent_id');
         $c = $request->input('subjectContent');
+        $l = $request->input('level');
         $parent = KnowsModel::find($p);
         if (!$parent){
             return response("父节点不存在",400);
         }
-        if(KnowsModel::where(["parent_id"=>$p,"content"=>$c])->count()<=0){
-            if ($request->input('level')!=$parent->level+1){
-
-                return response("请求添加知识点层次有误",400);
-            }
-            $know = new KnowsModel;
-            $know->parent_id = $p;
-            $know->content = $c;
-            $know->level = $parent->level+1;
-            $know->save();
+        if ($l!=$parent->level+1){
+            return response("请求添加知识点层次有误",400);
+        }
+        $test = KnowsModel::firstOrCreate(['parent_id'=>$p,'content'=>$c,'level'=>$l]);
+        if($test->wasRecentlyCreated){
+            return response("知识点添加成功",200);
         }else{
             return response("知识点已存在，请勿重复添加",400);
         }
-
     }
 
     /**
@@ -70,8 +66,8 @@ class KnowsController extends Controller
     {
         //
         $row = KnowsModel::find($id);
-        $level = $row->level;
-        $parentKnows = [$row];
+        $selfKnows = $row;
+        $parentKnows = [];
         if($row){
             while($row->parent_id!=0){
                 $row = KnowsModel::find($row->parent_id);
@@ -79,7 +75,7 @@ class KnowsController extends Controller
             }
         }
         $childKnows = KnowsModel::where('parent_id',$id)->get();
-        return array("parentKnows"=>$parentKnows,"childKnows"=>$childKnows,"level"=>$level);
+        return array("parentKnows"=>$parentKnows,"childKnows"=>$childKnows,"selfKnows"=>$selfKnows);
 
     }
 
@@ -104,6 +100,16 @@ class KnowsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $know = KnowsModel::find($id);
+        if(!$know){
+            return response("知识点不存在",400);
+        }elseif($know->content!=$request->input("originalContent")){
+            return response("原知识点校验错误",400);
+        }else{
+            $know->content = $request->input("modifiedContent");
+            $know->save();
+            return response("知识点修改成功",200);
+        }
     }
 
     /**

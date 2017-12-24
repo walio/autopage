@@ -17,10 +17,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/subject', function () {
+Route::get('/view/knows', function () {
     return view('Exam\home');
 });
-Route::get('/addSubject', function () {
+Route::get('/view/addKnows', function () {
+    return view('Exam\home');
+});
+Route::get('/view/modifyKnows', function () {
+    return view('Exam\home');
+});
+Route::get('/view/questions', function () {
+    return view('Exam\home');
+});
+Route::get('/view/modifyQuestions', function () {
     return view('Exam\home');
 });
 Route::resource('api/knows','Exam\KnowsController');
+Route::resource('api/questions','Exam\QuestionController');
