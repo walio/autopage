@@ -1,6 +1,13 @@
 
 import React, { Component } from 'react';
-import Sidebar from './Sidebar.jsx'
+import { Route,BrowserRouter,Switch} from 'react-router-dom';
+
+
+import Knows from './Know/Knows.jsx'
+import AddKnows from './Know/AddKnows'
+import ModifyKnows from './Know/ModifyKnows'
+import Questions from './Question/Questions'
+import ModifyQuestions from "./Question/ModifyQuestions";
 
 
 export default class Main extends Component {
@@ -12,29 +19,20 @@ export default class Main extends Component {
     }
     componentDidMount(){
         axios.get('/api/questions').then((res)=>{
-            this.setState({data:res.data})
+            this.setState({data:res.data[0]})
         })
     }
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-2">
-                        <Sidebar/>
-                    </div>
-                    <div className="col-md-10">
-                        <ul className="breadcrumb">
-                            <li>test</li>
-                            <li>test</li>
-                        </ul>
-                        {
-                            React.Children.map(this.props.children, function (child) {
-                                return <li>{child}</li>;
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/view/knows" component={Knows}/>
+                    <Route path="/view/addKnows" component={AddKnows}/>
+                    <Route path="/view/modifyKnows" component={ModifyKnows}/>
+                    <Route path="/view/questions" component={Questions}/>
+                    <Route path="/view/modifyQuestions" component={()=><ModifyQuestions {...this.props} {...this.state}/>}/>
+                </Switch>
+            </BrowserRouter>
         )
     }
 }

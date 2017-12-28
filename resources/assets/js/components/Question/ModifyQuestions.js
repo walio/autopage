@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import Quill from 'quill'
-export default (props) => {
-    if(!props.data) {
-        return null
-    }else{
-        console.log($('#editor-container'))
-        window.onload = () => {
-            let quill = new Quill('#editor-container', {
+import 'quill/dist/quill.snow.css'
+export default class Example extends Component {
+    constructor(props) {
+        super(props)
+        this.state = props
+    }
+    componentDidMount () {
+        Array.prototype.map.call(document.querySelectorAll(".editor-container"),(ele) => {
+            var quill = new Quill(ele, {
                 modules: {
-                    toolbar: [
-                        [{header: [1, 2, false]}],
-                        ['bold', 'italic', 'underline'],
-                        ['image', 'code-block']
-                    ]
+                    toolbar: ['image']
                 },
-                placeholder: 'Compose an epic...',
+                placeholder: '请输入题干',
                 theme: 'snow'  // or 'bubble'
-            });
-        }
+            })
+        })
+    }
+    render (){
         return (
             <form action="" method="post" className="form-horizontal" role="form">
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">知识子域：</label>
+                    <label className="col-sm-2 control-label">知识子域：{console.log(this.state)}</label>
                     <div className="col-sm-10">
                         <input type="email" className="form-control" id="inputEmail3" placeholder="请输入您的邮箱地址"/>
                     </div>
@@ -31,7 +31,7 @@ export default (props) => {
                     <div className="col-sm-10">
                         <select className="form-control " needle="needle" msg="您必须为要添加的试题选择一种题型"
                                 name="args[questiontype]" defaultValue={`难`}>
-                            <option rel="" value="难" selected></option>
+                            <option rel="" value="难" selected> </option>
                             <option rel="" value="中" selected></option>
                             <option rel="" value="易" selected></option>
                         </select>
@@ -39,29 +39,32 @@ export default (props) => {
                 </div>
                 <div className="form-group">
                     <label className="col-sm-2 control-label">题干：</label>
-                    <div className="col-sm-10" id="editor-container">
+                    <div className="col-sm-10">
+                        <div className="editor-container">{this.state.data.stem}</div>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label col-sm-2">备选项：</label>
-                    <div className="col-sm-10">
-                        <textarea className="form-control col-sm-2" name="args[questionselect]"
-                                  id="questionselect"> </textarea>
+                    <div className="col-sm-9">
+                        {this.state.data && JSON.parse(this.state.data.options).map((ele)=>[<div className="editor-container">{ele}</div>,<br />])}
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label col-sm-2">参考答案：</label>
                     <div className="col-sm-10">
-                        <div className="form-control">
-                            <label className="radio inline"><input type="radio" name="targs[questionanswer1]"
-                                                                   value="A"/>A</label>
-                            <label className="radio inline"><input type="radio" name="targs[questionanswer1]"
-                                                                   value="B"/>B</label>
-                            <label className="radio inline"><input type="radio" name="targs[questionanswer1]"
-                                                                   value="C"/>C</label>
-                            <label className="radio inline"><input type="radio" name="targs[questionanswer1]"
-                                                                   value="D"/>D</label>
-                        </div>
+                        {Array(this.state.data.option_number).fill().map((ele,index)=>{
+                            return <label className="radio-inline" key={index}>
+                                    <input
+                                        type="radio"
+                                        name="targs[questionanswer1]"
+                                        value={index+1}
+                                        checked={(parseInt(this.state.data.answer)===index+1)}
+                                        onChange={(e)=>{console.log(e)}}
+                                    />
+                                    {String.fromCharCode(index+65)}
+                                    </label>
+                        })
+                        }
                     </div>
                 </div>
                 <div className="form-group">
