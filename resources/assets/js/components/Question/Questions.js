@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'bootstrap-table'
 
 export default (props)=> {
     window.onload = ()=> {

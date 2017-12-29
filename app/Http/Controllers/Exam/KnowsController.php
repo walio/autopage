@@ -16,7 +16,7 @@ class KnowsController extends Controller
     public function index()
     {
         //
-        var_dump(123);
+        return $this->show(0);
     }
 
     /**
@@ -66,16 +66,9 @@ class KnowsController extends Controller
     {
         //
         $row = KnowsModel::find($id);
-        $selfKnows = $row;
-        $parentKnows = [];
-        if($row){
-            while($row->parent_id!=0){
-                $row = KnowsModel::find($row->parent_id);
-                array_unshift($parentKnows,$row);
-            }
-        }
-        $childKnows = KnowsModel::where('parent_id',$id)->get();
-        return array("parentKnows"=>$parentKnows,"childKnows"=>$childKnows,"selfKnows"=>$selfKnows);
+        $row || $row = KnowsModel::where("content","root")->first();
+        $row->child_knows;
+        return $row;
 
     }
 

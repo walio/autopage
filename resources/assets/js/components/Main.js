@@ -18,15 +18,18 @@ export default class Main extends Component {
         }
     }
     componentDidMount(){
-        axios.get('/api/questions').then((res)=>{
-            this.setState({data:res.data[0]})
+        // axios.get('/api/questions').then((res)=>{
+        //     this.setState({data:res.data[0]})
+        // })
+        axios.get('/api/knows').then((res)=>{
+            this.setState({data:res.data})
         })
     }
     render() {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route path="/view/knows" component={Knows}/>
+                    <Route path="/view/knows" component={()=><Knows {...this.props} {...this.state}/>}/>
                     <Route path="/view/addKnows" component={AddKnows}/>
                     <Route path="/view/modifyKnows" component={ModifyKnows}/>
                     <Route path="/view/questions" component={Questions}/>
