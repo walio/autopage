@@ -12,5 +12,6 @@ class QuestionKnowsTableSeeder extends Seeder
     public function run()
     {
         //
+        
     }
 }

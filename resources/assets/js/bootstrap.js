@@ -1,5 +1,6 @@
 
-window._ = require('lodash');
+window._ = require('lodash')
+import 'bootstrap'
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -9,8 +10,6 @@ window._ = require('lodash');
 
 try {
     window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap-sass');
 } catch (e) {}
 require('font-awesome/css/font-awesome.css');
 /**
@@ -36,6 +35,8 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -99,4 +100,3 @@ $(()=>{
         })
     })
 })
-

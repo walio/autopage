@@ -8,7 +8,9 @@ import { Route,BrowserRouter} from 'react-router-dom';
  * building robust, powerful web applications using React + Laravel.
  */
 import './bootstrap'
-import Sidebar from './components/Sidebar.jsx'
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+const { SubMenu } = Menu;
+const { Header, Content, Footer, Sider } = Layout;
 import Main from './components/Main'
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -18,22 +20,58 @@ import Main from './components/Main'
 
 function App (props) {
     return (
-    <div className="container">
-        <div className="row">
-            <div className="col-md-2">
-                <Sidebar/>
-            </div>
-            <div className="col-md-10">
-                <ul className="breadcrumb">
-                    <li>test</li>
-                    <li>test</li>
-                </ul>
-                <Main />
-            </div>
-        </div>
-    </div>
-
-        )}
+        <Layout>
+            <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
+                <div className="logo" />
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                    <Menu.Item key="1">
+                        <Icon type="user" />
+                        <span className="nav-text">nav 1</span>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                        <Icon type="video-camera" />
+                        <span className="nav-text">nav 2</span>
+                    </Menu.Item>
+                    <Menu.Item key="3">
+                        <Icon type="upload" />
+                        <span className="nav-text">nav 3</span>
+                    </Menu.Item>
+                    <Menu.Item key="4">
+                        <Icon type="bar-chart" />
+                        <span className="nav-text">nav 4</span>
+                    </Menu.Item>
+                    <Menu.Item key="5">
+                        <Icon type="cloud-o" />
+                        <span className="nav-text">nav 5</span>
+                    </Menu.Item>
+                    <Menu.Item key="6">
+                        <Icon type="appstore-o" />
+                        <span className="nav-text">nav 6</span>
+                    </Menu.Item>
+                    <Menu.Item key="7">
+                        <Icon type="team" />
+                        <span className="nav-text">nav 7</span>
+                    </Menu.Item>
+                    <Menu.Item key="8">
+                        <Icon type="shop" />
+                        <span className="nav-text">nav 8</span>
+                    </Menu.Item>
+                </Menu>
+            </Sider>
+            <Layout style={{ marginLeft: 200 }}>
+                <Header style={{ background: '#fff', padding: 0 }} />
+                <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                    <div style={{ padding: 24, background: '#fff'}}>
+                        <Main />
+                    </div>
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>
+                    自动组卷系统@<a href="#">copyright</a>
+                </Footer>
+            </Layout>
+        </Layout>
+    )
+}
 
 
 ReactDOM.render(<App />, document.getElementById('main'));

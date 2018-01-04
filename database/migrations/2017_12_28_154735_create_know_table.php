@@ -16,7 +16,7 @@ class CreateKnowTable extends Migration
         Schema::create('know', function (Blueprint $table) {
             $table->increments('id');
             $table->text('content');
-            $table->text('setting');
+            $table->text('setting')->nullable();
             $table->timestamps();
         });
     }

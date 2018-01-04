@@ -12,5 +12,18 @@ class KnowTableSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('know')->insert([[
+            'content'=>"root"
+        ],[
+            'content'=>"math"
+        ],[
+            'content'=>'literature'
+        ],[
+            'content'=>'algebra'
+        ],[
+            'content'=>'geometry'
+        ],[
+            'content'=>'factorization'
+        ]]);
     }
 }

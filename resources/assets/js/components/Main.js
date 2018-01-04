@@ -18,12 +18,12 @@ export default class Main extends Component {
         }
     }
     componentDidMount(){
-        // axios.get('/api/questions').then((res)=>{
-        //     this.setState({data:res.data[0]})
-        // })
-        axios.get('/api/knows').then((res)=>{
-            this.setState({data:res.data})
+        axios.get('/api/questions').then((res)=>{
+            this.setState({data:res.data[0]})
         })
+        // axios.get('/api/knows?fields=children').then((res)=>{
+        //     this.setState({data:res.data})
+        // })
     }
     render() {
         return (
@@ -32,8 +32,8 @@ export default class Main extends Component {
                     <Route path="/view/knows" component={()=><Knows {...this.props} {...this.state}/>}/>
                     <Route path="/view/addKnows" component={AddKnows}/>
                     <Route path="/view/modifyKnows" component={ModifyKnows}/>
-                    <Route path="/view/questions" component={Questions}/>
-                    <Route path="/view/modifyQuestions" component={()=><ModifyQuestions {...this.props} {...this.state}/>}/>
+                    <Route path="/view/questions" component={()=><Questions {...this.props} {...this.state}/>}/>
+                    <Route path="/view/modifyQuestions" component={()=><ModifyQuestions {...this.props} {...this.state.data}/>}/>
                 </Switch>
             </BrowserRouter>
         )

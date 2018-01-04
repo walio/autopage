@@ -12,15 +12,14 @@ class QuestionTableSeeder extends Seeder
     public function run()
     {
         //
-        Question::create(array(
+        DB::table('questions')->insert([
             "type"=>0,
             "stem"=>"1+1=?",
-            "options"=>array("the answer is 1","the answer is 2","the answer is 3","the answer is 4"),
-            "options_number"=>4,
+            "options"=> json_encode(["the answer is 1","the answer is 2","the answer is 3","the answer is 4"]),
             "answer"=>1,
             "status"=>1,
             "difficulty_level"=>0,
-            "reference"=>0
-        ));
+            "creator_id"=>1
+        ]);
     }
 }

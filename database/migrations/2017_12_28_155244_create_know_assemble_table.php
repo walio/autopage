@@ -15,8 +15,8 @@ class CreateKnowAssembleTable extends Migration
     {
         Schema::create('know_assemble', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('from_id');
-            $table->integer('to_id');
+            $table->integer('from_id')->references('id')->on('know');
+            $table->integer('to_id')->references('id')->on('know');
             $table->timestamps();
         });
     }

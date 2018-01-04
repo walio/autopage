@@ -18,13 +18,13 @@ class CreateQuestionsTable extends Migration
             $table->integer('type');
             $table->text('stem');
             $table->integer('creator_id')->references('id')->on('users');
-            $table->integer('last_modify_user_id')->references('id')->on('users');
+            $table->integer('last_modify_user_id')->references('id')->on('users')->nullable();
             $table->json('options');
-            $table->tinyInteger('option_number');
-            $table->text('digest');
+            $table->tinyInteger('answer');
+            $table->text('digest')->nullable();
             $table->integer('status');
             $table->integer('difficulty_level');
-            $table->integer('reference');
+            $table->integer('reference')->nullable()->default(0);
             $table->timestamps();
         });
     }

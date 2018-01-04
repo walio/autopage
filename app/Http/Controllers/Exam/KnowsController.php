@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Exam;
 
 use App\Knows as KnowsModel;
+use App\KnowAssemble as KnowsAssembleModel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,10 +15,10 @@ class KnowsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return $this->show(0);
+        return ['nodes'=>KnowsModel::all(),'arc'=>KnowsAssembleModel::all()];
     }
 
     /**
@@ -38,22 +40,20 @@ class KnowsController extends Controller
     public function store(Request $request)
     {
         //
-        $p = $request->input('parent_id');
-        $c = $request->input('subjectContent');
-        $l = $request->input('level');
-        $parent = KnowsModel::find($p);
-        if (!$parent){
-            return response("父节点不存在",400);
-        }
-        if ($l!=$parent->level+1){
-            return response("请求添加知识点层次有误",400);
-        }
-        $test = KnowsModel::firstOrCreate(['parent_id'=>$p,'content'=>$c,'level'=>$l]);
-        if($test->wasRecentlyCreated){
-            return response("知识点添加成功",200);
-        }else{
+        $p = $request->input('parents');
+        $c = $request->input('content');
+        $k = KnowsModel::firstOrCreate('content',$c);
+        if(!$k->wasRecentlyCreated){
             return response("知识点已存在，请勿重复添加",400);
         }
+        try{
+            array_map(function($v) use($k){
+                KnowsModel::find($v)->children->save($k);
+            },$p);
+        }catch (ModelNotFoundException $e) {
+            return response("父节点未找到",400);
+        }
+
     }
 
     /**
@@ -62,12 +62,15 @@ class KnowsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         //
         $row = KnowsModel::find($id);
         $row || $row = KnowsModel::where("content","root")->first();
-        $row->child_knows;
+        $fields = explode(',',$request->input('fields'));
+        array_map(function($v) use($row){
+            $row->$v;
+        },$fields);
         return $row;
 
     }
