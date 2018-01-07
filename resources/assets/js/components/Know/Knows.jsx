@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
-import echarts from 'echarts'
+// import echarts from 'echarts'
 
 export default class Knows extends Component{
     constructor(props){
         super(props)
     }
     componentDidMount () {
-        let option = {
-            tooltip: {},
-            animationDurationUpdate: 1500,
-            animationEasingUpdate: 'quinticInOut',
-            series: [
-                {
-                    type: 'graph',
-                    roam: true,
-                    name: 'structure',
-                    layout: 'force',
-                    draggable: true,
-                    force: {
-                        edgeLength: 200
-                    }
-                }
-            ]
-        };
-        let ee = echarts.init(document.getElementById('subject'))
-        ee.setOption(option)
-        console.log(this.props.data)
-        this.props.data && ee.setOption({
-            series:[{
-                name: 'structure',
-                data: this.props.data.nodes.map((ele)=>({'name':String(ele.id)})),
-                links: this.props.data.arc.map((ele)=>({'source':String(ele.from_id),'target':String(ele.to_id)}))
-            }]
-        })
+        // let option = {
+        //     tooltip: {},
+        //     animationDurationUpdate: 1500,
+        //     animationEasingUpdate: 'quinticInOut',
+        //     series: [
+        //         {
+        //             type: 'graph',
+        //             roam: true,
+        //             name: 'structure',
+        //             layout: 'force',
+        //             draggable: true,
+        //             force: {
+        //                 edgeLength: 200
+        //             }
+        //         }
+        //     ]
+        // };
+        // let ee = echarts.init(document.getElementById('subject'))
+        // ee.setOption(option)
+        // console.log(this.props.data)
+        // this.props.data && ee.setOption({
+        //     series:[{
+        //         name: 'structure',
+        //         data: this.props.data.nodes.map((ele)=>({'name':String(ele.id)})),
+        //         links: this.props.data.arc.map((ele)=>({'source':String(ele.from_id),'target':String(ele.to_id)}))
+        //     }]
+        // })
     }
 
     render () {
@@ -63,8 +63,8 @@ export default class Knows extends Component{
                     </tr>
                 ))}
                 </tbody>
-            </table>,
-            <div id="subject" style={{width:500,height:500}}></div>
+            </table>
+
         ]
     }
 }

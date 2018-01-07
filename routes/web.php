@@ -16,21 +16,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/view/knows', function () {
+Route::get('view/{fuck}', function () {
     return view('Exam\home');
-});
-Route::get('/view/addKnows', function () {
-    return view('Exam\home');
-});
-Route::get('/view/modifyKnows', function () {
-    return view('Exam\home');
-});
-Route::get('/view/questions', function () {
-    return view('Exam\home');
-});
-Route::get('/view/modifyQuestions', function () {
-    return view('Exam\home');
-});
+})->where("fuck",".*");
 Route::resource('api/knows','Exam\KnowsController');
 Route::resource('api/questions','Exam\QuestionController');
