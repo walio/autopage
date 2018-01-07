@@ -1,6 +1,5 @@
 
-window._ = require('lodash')
-import 'bootstrap'
+// window._ = require('lodash')
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -8,10 +7,6 @@ import 'bootstrap'
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-    window.$ = window.jQuery = require('jquery');
-} catch (e) {}
-require('font-awesome/css/font-awesome.css');
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -60,43 +55,3 @@ window.GetQueryString = (name) =>{
     if(r)return  unescape(r[2]); return null;
 };
 
-$(()=>{
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $(document).on('click','.ajax',(e) => {
-        e.preventDefault()
-        $.ajax({
-            type:$(e.target).attr('methods'),
-            url: $(e.target).attr('href'),
-            success: (data, textStatus) => {
-                console.log(data)
-                //location.reload(true);
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.log(jqXHR.responseText)
-                let failModal = $('#failModal')
-                failModal.find(".modal-content").text(errorThrown);
-                failModal.modal('show');
-            }
-        })
-    });
-    $('form').submit((e)=>{
-        e.preventDefault();
-        console.log()
-        $.ajax({
-            type:$(e.target).attr('method'),
-            url: $(e.target).attr('action'),
-            data: $(e.target).serialize(),
-            success: (data, textStatus) => {
-                console.log(data)
-                location.href = $(e.target).attr('data-forward')
-                //location.reload(true);
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.log(jqXHR.responseText)
-                let failModal = $('#failModal')
-                failModal.find(".modal-content").text(errorThrown);
-                failModal.modal('show');
-            }
-        })
-    })
-})

@@ -16,7 +16,7 @@ class Questions extends Model
         'options'=> 'array',
     ];
 
-    public function questions(){
+    public function knows(){
         return $this->belongsToMany('App\Knows');
     }
 }
