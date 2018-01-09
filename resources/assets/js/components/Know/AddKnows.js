@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 export default class AddKnows extends Component{
-    render () {
+    render() {
         return (
             <form action="/api/knows" method="post" className="form-horizontal">
                 <input type="hidden" name="_token" value={document.head.querySelector('meta[name="csrf-token"]').content}/>

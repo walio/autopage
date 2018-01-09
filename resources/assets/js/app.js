@@ -1,78 +1,73 @@
-
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route,BrowserRouter} from 'react-router-dom';
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
-import './bootstrap'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
-import Main from './components/Main'
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import axios from 'axios';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import Main from './components/Main';
 
-function App (props) {
-    return (
-        <Layout>
-            <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
-                <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                    <Menu.Item key="1">
-                        <Icon type="user" />
-                        <span className="nav-text">nav 1</span>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Icon type="video-camera" />
-                        <span className="nav-text">nav 2</span>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="upload" />
-                        <span className="nav-text">nav 3</span>
-                    </Menu.Item>
-                    <Menu.Item key="4">
-                        <Icon type="bar-chart" />
-                        <span className="nav-text">nav 4</span>
-                    </Menu.Item>
-                    <Menu.Item key="5">
-                        <Icon type="cloud-o" />
-                        <span className="nav-text">nav 5</span>
-                    </Menu.Item>
-                    <Menu.Item key="6">
-                        <Icon type="appstore-o" />
-                        <span className="nav-text">nav 6</span>
-                    </Menu.Item>
-                    <Menu.Item key="7">
-                        <Icon type="team" />
-                        <span className="nav-text">nav 7</span>
-                    </Menu.Item>
-                    <Menu.Item key="8">
-                        <Icon type="shop" />
-                        <span className="nav-text">nav 8</span>
-                    </Menu.Item>
-                </Menu>
-            </Sider>
-            <Layout style={{ marginLeft: 200 }}>
-                <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                    <div style={{ padding: 24, background: '#fff'}}>
-                        <Main />
-                    </div>
-                </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    自动组卷系统@<a href="#">copyright</a>
-                </Footer>
-            </Layout>
-        </Layout>
-    )
+const { Content, Footer, Header, Sider } = Layout;
+const { SubMenu } = Menu;
+window.axios = axios;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+const token = document.head.querySelector('meta[name="csrf-token"]');
+window.React = React;
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+window.GetQueryString = (name) => {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    const r = window.location.search.substr(1).match(reg);
+    if (r) return unescape(r[2]); return null;
+};
 
+
+function App() {
+    return (
+        <Layout>
+            <Header style={{ position: 'fixed', width: '100%', zIndex: 8 }}>
+                <h3 style={{ color: '#fff' }}>自动组卷系统</h3>
+            </Header>
+            <Content style={{ padding: '0 50px', marginTop: 64 }}>
+                <Breadcrumb style={{ margin: '16px 0' }}>
+                    <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item>List</Breadcrumb.Item>
+                    <Breadcrumb.Item>App</Breadcrumb.Item>
+                </Breadcrumb>
+                <Layout style={{ padding: '24px 0', background: '#fff' }}>
+                    <Sider width={200} style={{ background: '#fff', position: 'fixed' }}>
+                        <Menu
+                            mode="inline"
+                            defaultSelectedKeys={['1']}
+                            defaultOpenKeys={['sub1']}
+                            style={{ height: '100%' }}
+                        >
+                            <SubMenu key="sub1" title={<p>科目管理</p>}>
+                                <Menu.Item>知识点</Menu.Item>
+                                <Menu.Item>可视化</Menu.Item>
+                            </SubMenu>
+                            <SubMenu key="sub2" title="题目管理">
+                                <Menu.Item><a href="#">题目类型</a></Menu.Item>
+                                <Menu.Item><a href="questions">有效题目</a></Menu.Item>
+                                <Menu.Item><a href="">停用题目</a></Menu.Item>
+                            </SubMenu>
+                            <SubMenu key="sub3" title="试卷管理">
+                                <Menu.Item key="9">试卷类型</Menu.Item>
+                                <Menu.Item key="10">随机组卷</Menu.Item>
+                                <Menu.Item key="11">有效试卷</Menu.Item>
+                            </SubMenu>
+                        </Menu>
+                    </Sider>
+                    <Content style={{ padding: '5% 50px', minHeight: 280, marginLeft: '200px' }}>
+                        <Main />
+                    </Content>
+                </Layout>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>
+                Ant Design ©2016 Created by Ant UED
+            </Footer>
+        </Layout>
+    );
+}
 ReactDOM.render(<App />, document.getElementById('main'));
-
-

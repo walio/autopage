@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Exam;
 
-use App\Questions as QuestionModel;
+use App\Question as QuestionModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

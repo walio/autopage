@@ -11,12 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            KnowAssembleTableSeeder::class,
-            KnowTableSeeder::class,
-            QuestionKnowsTableSeeder::class,
-            QuestionTableSeeder::class
-        ]);
         // $this->call(UsersTableSeeder::class);
     }
 }

@@ -14,10 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Auth::routes();
 Route::get('view/{fuck}', function () {
-    return view('Exam\home');
+    return view('index');
 })->where("fuck",".*");
 Route::resource('api/knows','Exam\KnowsController');
 Route::resource('api/questions','Exam\QuestionController');

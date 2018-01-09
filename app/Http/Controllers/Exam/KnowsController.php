@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Exam;
 
-use App\Knows as KnowsModel;
+use App\Know as KnowsModel;
 use App\KnowAssemble as KnowsAssembleModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
