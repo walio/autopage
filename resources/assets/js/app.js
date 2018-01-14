@@ -8,13 +8,7 @@ const { Content, Footer, Header, Sider } = Layout;
 const { SubMenu } = Menu;
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-const token = document.head.querySelector('meta[name="csrf-token"]');
 window.React = React;
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
 
 window.GetQueryString = (name) => {
     const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
