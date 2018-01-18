@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
-const APP_PATH = path.resolve(ROOT_PATH, 'resources/assets/js');
+const APP_PATH = path.resolve(ROOT_PATH, 'resources/assets');
 const APP_FILE = path.resolve(APP_PATH, 'app');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'public');
 
@@ -14,7 +14,6 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: {
         index: APP_FILE,
-        css: path.resolve(ROOT_PATH, 'resources/assets/sass/app'),
         lib: 'react',
     },
     output: {

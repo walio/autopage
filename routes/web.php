@@ -26,13 +26,17 @@ $resource = function ($name, $controller) use($router) {
 
     $router->post("/{$name}", "{$controller}@store");
 
-    $router->put("/{$name}/{user}", "{$controller}@update");
+    $router->put("/{$name}/{id}", "{$controller}@update");
 
-    $router->delete("/{$name}/{user}", "{$controller}@destroy");
+    $router->delete("/{$name}/{id}", "{$controller}@destroy");
 };
 $router->group(['prefix' => 'api','middleware' => 'auth'], function () use ($router,$resource){
     $resource('knows','KnowsController');
     $resource('questions','QuestionController');
+    $resource('examtype','ExamtypeController');
+    $router->get("logout", "TokenController@logout");
 });
-$resource("user","UserController");
-$router->post("api/token", "TokenController@login");
+$router->group(['prefix' => 'api'], function () use ($router,$resource){
+    $resource("user","UserController");
+    $router->post("token", "TokenController@login");
+});

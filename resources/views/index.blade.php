@@ -59,8 +59,8 @@
             margin-bottom: 30px;
         }
     </style>
-<link href="/css/index.css" rel="stylesheet"><link href="/css/css.css" rel="stylesheet"></head>
+<link href="/css/index.css" rel="stylesheet"></head>
 <body>
 <div id="main"></div>
-<script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/lib.js"></script><script type="text/javascript" src="/js/css.js"></script></body>
+<script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/lib.js"></script></body>
 </html>

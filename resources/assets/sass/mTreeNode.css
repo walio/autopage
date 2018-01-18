@@ -1,0 +1,9 @@
+.ant-tree li .ant-tree-node-content-wrapper{
+    height: auto;
+}
+.ant-tree li .ant-tree-node-content-wrapper.ant-tree-node-selected{
+    background-color: inherit;
+}
+.ant-tree li .ant-tree-node-content-wrapper:hover{
+    background-color: inherit;
+}

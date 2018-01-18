@@ -6,13 +6,13 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
-// reference: laravel\framework\Illuminate\Foundation\Auth\AuthenticatesUsers
 class TokenController extends BaseController
 {
     use ThrottlesLogins;
+
+    protected $user;
 
     public function login(Request $request)
     {
@@ -36,7 +36,13 @@ class TokenController extends BaseController
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+        return response("failed in login", 401);
+    }
+
+    public function logout () {
+        $user = Auth::user();
+        $user->token = null;
+        $user->save();
     }
 
     /**
@@ -63,9 +69,11 @@ class TokenController extends BaseController
     {
         $credentials = $this->credentials($request);
         $user = User::where("name",$credentials["name"])->first();
+        $this->user = $user;
         if($user){
             return Hash::check($credentials["password"], $user->password);
         }
+        return null;
     }
 
     /**
@@ -88,39 +96,15 @@ class TokenController extends BaseController
      */
     protected function sendLoginResponse(Request $request)
     {
-        $request->session()->regenerate();
+        $token = Hash::make($this->user["name"].$this->user["password"].str_random(random_int(10,30)));
+
+        $this->user["token"] = $token;
+
+        $this->user->save();
 
         $this->clearLoginAttempts($request);
 
-        return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
-    }
-
-    /**
-     * The user has been authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        //
-    }
-
-    /**
-     * Get the failed login response instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws ValidationException
-     */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
-        ]);
+        return ["token"=>$token];
     }
 
     /**
@@ -131,16 +115,5 @@ class TokenController extends BaseController
     public function username()
     {
         return 'name';
-    }
-
-
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard();
     }
 }

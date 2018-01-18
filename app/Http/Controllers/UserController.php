@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -38,7 +37,7 @@ class UserController extends BaseController
         }else{
             $user = new User;
             $user->name = $u;
-            $user->password = $p;
+            $user->password = Hash::make($p);
             $user->save();
             return response("用户新建成功", 200);
         }

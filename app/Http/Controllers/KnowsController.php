@@ -18,7 +18,7 @@ class KnowsController extends BaseController
     public function index(Request $request)
     {
         //
-        return ['nodes'=>KnowsModel::all(),'arc'=>KnowsAssembleModel::all()];
+        return ['nodes'=>KnowsModel::all(),'arcs'=>KnowsAssembleModel::all()];
     }
 
     /**
