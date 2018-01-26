@@ -30,10 +30,13 @@ $resource = function ($name, $controller) use($router) {
 
     $router->delete("/{$name}/{id}", "{$controller}@destroy");
 };
+
+// todo: abstract a register function
 $router->group(['prefix' => 'api','middleware' => 'auth'], function () use ($router,$resource){
     $resource('knows','KnowsController');
     $resource('questions','QuestionController');
     $resource('examtype','ExamtypeController');
+    $resource('paper','PaperController');
     $router->get("logout", "TokenController@logout");
 });
 $router->group(['prefix' => 'api'], function () use ($router,$resource){

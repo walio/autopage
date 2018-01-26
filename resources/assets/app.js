@@ -5,6 +5,9 @@ import axios from 'axios';
 import { Layout, Dropdown, Icon, Menu, Modal } from 'antd';
 import Main from './js/Main';
 import login from './js/Auth/login';
+import Paper from './js/Paper/Detail';
+import page404 from './404';
+import page401 from './401';
 
 const { Content, Footer, Header } = Layout;
 window.axios = axios;
@@ -51,29 +54,38 @@ function App() {
         </Menu>
     );
     return (
-        <Layout>
-            <Header style={{ position: 'fixed', width: '100%', zIndex: 8 }}>
-                <span style={{ color: '#fff', float: 'left' }}>自动组卷系统</span>
-                {localStorage.u && (
-                    <Dropdown overlay={menu} >
-                        <a className="ant-dropdown-link" href="#" style={{ float: 'right' }}>
-                            {localStorage.u}<Icon type="down" />
-                        </a>
-                    </Dropdown>)
-                }
-            </Header>
-            <Content style={{ padding: '0 50px', marginTop: 64 }}>
-                <BrowserRouter>
-                    <Switch>
-                        <Route path="/view/login" component={login} />
-                        <Route component={Main} />
-                    </Switch>
-                </BrowserRouter>
-            </Content>
-            <Footer style={{ textAlign: 'center' }}>
-                Ant Design ©2016 Created by Ant UED
-            </Footer>
-        </Layout>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/view/401" component={page401} />
+                <Route path="/view/404" component={page404} />
+                <Route path="/view/paperDetail" component={Paper} />
+                <Route path="/view">
+                    <Layout>
+                        <Header style={{ position: 'fixed', width: '100%', zIndex: 8 }}>
+                            <span style={{ color: '#fff', float: 'left' }}>自动组卷系统</span>
+                            {localStorage.u && (
+                                <Dropdown overlay={menu} >
+                                    <a className="ant-dropdown-link" href="#" style={{ float: 'right' }}>
+                                        {localStorage.u}<Icon type="down" />
+                                    </a>
+                                </Dropdown>)
+                            }
+                        </Header>
+                        <Content style={{ padding: '0 50px', marginTop: 64 }}>
+                            <BrowserRouter>
+                                <Switch>
+                                    <Route path="/view/login" component={login} />
+                                    <Route component={Main} />
+                                </Switch>
+                            </BrowserRouter>
+                        </Content>
+                        <Footer style={{ textAlign: 'center' }}>
+                            Ant Design ©2016 Created by Ant UED
+                        </Footer>
+                    </Layout>
+                </Route>
+            </Switch>
+        </BrowserRouter>
     );
 }
 ReactDOM.render(<App />, document.getElementById('main'));

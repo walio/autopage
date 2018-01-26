@@ -50,7 +50,7 @@ export default Form.create()(({ data, fetch, form }) => {
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 14, offset: 1 }}
             >
-                {getFieldDecorator('stem', { initialValue: data.stem })(
+                {getFieldDecorator('stem', { initialValue: data.stem[0] })(
                     <ReactQuill
                         modules={{ toolbar: ['image'] }}
                         formats={['image']}

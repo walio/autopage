@@ -1,3 +1,4 @@
+import React from 'react';
 import { Form, Button, Radio, Icon, Transfer, Select } from 'antd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';

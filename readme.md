@@ -16,6 +16,16 @@
 #### react
 #### ant-design
 
+## 设计理念
+
+1. 尽量保证安全，同时保证一定的灵活性，有时候可能会牺牲一点点性能换取安全和一致性（如使用“外键”）
+2. array_map的语义性太差，换成foreach
+
+## todo
+
+1. 存储在localStorage的token是否有被窃取的可能？还有knows是否有被更改的可能？
+2. laravel实在是太慢了。。。不过作为小白觉得orm抽象地很不错，很值得学习
+
 ## License
 
 [MIT license](http://opensource.org/licenses/MIT)

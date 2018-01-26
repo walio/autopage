@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Question as QuestionModel;
+use App\Models\Question as QuestionModel;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 

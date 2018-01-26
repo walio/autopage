@@ -7,6 +7,8 @@ import AddQuestion from './Question/Add';
 import Examtype from './Examtype/Show';
 import AddExamtype from './Examtype/Add';
 import ModifyExamtype from './Examtype/Edit';
+import AutoPage from './Paper/Add';
+import Papers from './Paper/Show';
 
 
 const { Content, Sider } = Layout;
@@ -15,10 +17,13 @@ export default class Main extends Component {
     constructor() {
         super();
         this.fetch = url => {
+            // todo: cache,especially knows which is rarely changed
             axios.get(url).then(res => {
                 this.setState({ data: res.data || true });
             }).catch(error => {
-                console.log(error.status);
+                if (error.response.status === 401) {
+                    document.location = '/view/login';
+                }
             });
         };
         this.state = {
@@ -63,11 +68,13 @@ export default class Main extends Component {
                                 <BrowserRouter>
                                     <Switch>
                                         <Route path="/view/examtypes" component={() => <Examtype {...this.state} fetch={this.fetch} />} />
-                                        <Route path="/view/addExamtype" component={() => <AddExamtype data={{ name: '', knows: {} }} />} />
+                                        <Route path="/view/addExamtype" component={() => <AddExamtype {...this.state} fetch={this.fetch} />} />
                                         <Route path="/view/modifyExamtype" component={() => <ModifyExamtype {...this.state} fetch={this.fetch} />} />
                                         <Route path="/view/questions" component={() => <Questions {...this.state} fetch={this.fetch} />} />
                                         <Route path="/view/modifyQuestion" component={() => <ModifyQuestion {...this.state} fetch={this.fetch} />} />
                                         <Route path="/view/addQuestion" component={() => <AddQuestion data={{ stem: '', options: [''], digest: '' }} />} />
+                                        <Route path="/view/autoPage" component={() => <AutoPage {...this.state} fetch={this.fetch} />} />
+                                        <Route path="/view/papers" component={() => <Papers {...this.state} fetch={this.fetch} />} />
                                     </Switch>
                                 </BrowserRouter>
                             </Switch>
