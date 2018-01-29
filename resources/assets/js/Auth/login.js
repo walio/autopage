@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Icon, Row, Col, Card, Modal } from 'antd';
 
 export default Form.create()(({ form }) => {
-    const { getFieldDecorator, getFieldsValue, getFieldValue } = form;
+    const { getFieldDecorator, validateFields } = form;
     return (
         <Row>
             <Col span={16} offset={4}>
@@ -10,16 +10,25 @@ export default Form.create()(({ form }) => {
                     <Form
                         onSubmit={event => {
                             event.preventDefault();
-                            axios.post('/api/token', getFieldsValue()).then(res => {
-                                // todo: crypto
-                                localStorage.s = res.data.token;
-                                localStorage.u = getFieldValue('name');
-                                document.location = document.referrer;
-                            }).catch(error => {
-                                console.log(error);
-                                Modal.error({
-                                    title: '登录失败',
-                                    content: '用户名或密码错误',
+                            validateFields((err, values) => {
+                                if (err) {
+                                    console.debug('fail in submit, data as follows', values);
+                                    return;
+                                }
+                                console.debug('submit data as follows', values);
+                                axios.post('/api/login', values).then(res => {
+                                    // todo: crypto
+                                    localStorage.s = res.data.token;
+                                    localStorage.u = values.name;
+                                    // document.location = document.referrer || '/view/';
+                                }).catch(error => {
+                                    if (error.response.status === 422 && error.response.data.errors.name[0] === 'These credentials do not match our records.') {
+                                        Modal.error({
+                                            title: '登录失败',
+                                            content: '用户名或密码错误',
+                                        });
+                                    }
+                                    console.log('unknown error response', error.response);
                                 });
                             });
                         }}
@@ -50,10 +59,10 @@ export default Form.create()(({ form }) => {
                         <Form.Item
                             wrapperCol={{ span: 10, offset: 7 }}
                         >
-                            <Button type="primary" htmlType="submit" className="login-form-button">
+                            <Button type="primary" htmlType="submit">
                                 Log in
                             </Button>
-                            Or <a href="">register now!</a>
+                            Or<a href="/api/register"> register now</a>
                         </Form.Item>
                     </Form>
                 </Card>

@@ -5,11 +5,13 @@ use App\Models\Examtype;
 use App\Models\Know;
 use App\Models\Paper;
 use App\Models\Question;
-use App\Models\User;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Lumen\Routing\Controller as BaseController;
-class PaperController extends BaseController
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+
+class PaperController extends Controller
 {
     use Resource;
 
@@ -44,8 +46,14 @@ class PaperController extends BaseController
 
     public function show($id) {
         $model = $this->findOrFail($id)->toArray();
+        // todo : do it in a single sql
         foreach ($model['questions'] as $index=>$questionId){
-            $model['questions'][$index] = Question::find($questionId);
+            $q =  Question::find($questionId)->toArray();
+            foreach ($q['options'] as $optionIndex=>$option){
+                $q['options'][$optionIndex] = ['letter'=>chr($optionIndex+65),'text'=>$option];
+            }
+            $q['number'] = $index+1;
+            $model['questions'][$index] = $q;
         }
         return $model;
     }

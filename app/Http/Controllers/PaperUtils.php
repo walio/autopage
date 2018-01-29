@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Know;
 use phpDocumentor\Reflection\Types\Array_;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 class PaperUtils
 {
@@ -28,15 +29,6 @@ class PaperUtils
             })->all();
             return array_merge($acc,$selected);
         }, []);
-    }
-
-    /**
-     * create word file from questions
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function word($questions, $templateFile, $config){
-
     }
 
     public static function addReference($paper){

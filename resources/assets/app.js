@@ -12,10 +12,10 @@ import page401 from './401';
 const { Content, Footer, Header } = Layout;
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-if (!window.location.pathname.endsWith('/view/login') && !window.localStorage.s) {
-    window.location = '/view/login';
+if (!window.location.pathname.endsWith('/auth/login') && !window.localStorage.s) {
+    window.location = '/auth/login';
 } else {
-    window.axios.defaults.headers.common.Authorization = window.localStorage.s;
+    window.axios.defaults.headers.common.Authorization = `Bearer ${window.localStorage.s}`;
 }
 
 window.GetQueryString = (name) => {
@@ -29,14 +29,14 @@ function App() {
     const menu = (
         <Menu>
             <Menu.Item>
-                <a href="/view/personinfo">个人信息</a>
+                <a href="/auth/personinfo">个人信息</a>
             </Menu.Item>
             <Menu.Item>
                 <a
                     onClick={() => {
                         axios.get('/api/logout').then(() => {
                             localStorage.clear();
-                            document.location = '/view/login';
+                            document.location = '/auth/login';
                         }).catch(error => {
                             console.log(error);
                             Modal.error({
@@ -44,7 +44,7 @@ function App() {
                                 content: '请重新登录',
                             });
                             localStorage.clear();
-                            document.location = '/view/login';
+                            document.location = '/auth/login';
                         });
                     }}
                 >
@@ -59,7 +59,7 @@ function App() {
                 <Route path="/view/401" component={page401} />
                 <Route path="/view/404" component={page404} />
                 <Route path="/view/paperDetail" component={Paper} />
-                <Route path="/view">
+                <Route path="/">
                     <Layout>
                         <Header style={{ position: 'fixed', width: '100%', zIndex: 8 }}>
                             <span style={{ color: '#fff', float: 'left' }}>自动组卷系统</span>
@@ -74,13 +74,13 @@ function App() {
                         <Content style={{ padding: '0 50px', marginTop: 64 }}>
                             <BrowserRouter>
                                 <Switch>
-                                    <Route path="/view/login" component={login} />
-                                    <Route component={Main} />
+                                    <Route path="/auth/login" component={login} />
+                                    <Route path="/view" component={Main} />
                                 </Switch>
                             </BrowserRouter>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>
-                            Ant Design ©2016 Created by Ant UED
+                            AutoPage ©2018 Created by <a href="https://github.com/walio"> walio </a>
                         </Footer>
                     </Layout>
                 </Route>

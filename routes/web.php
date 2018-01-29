@@ -2,44 +2,37 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+Auth::routes();
+Route::get('/', function () {
+    return view('welcome');
 });
 
-$router->get('view/{fuck:.*}', function () {
-    return view('index');
-});
-$resource = function ($name, $controller) use($router) {
-    $router->get("/{$name}","{$controller}@index");
-
-    $router->get("/{$name}/{id}", "{$controller}@show");
-
-    $router->post("/{$name}", "{$controller}@store");
-
-    $router->put("/{$name}/{id}", "{$controller}@update");
-
-    $router->delete("/{$name}/{id}", "{$controller}@destroy");
-};
+Route::view('/view/{fuck}', 'index')->where('fuck', '.*');
+Route::view('/auth/{fuck}', 'index')->where('fuck', '.*');
 
 // todo: abstract a register function
-$router->group(['prefix' => 'api','middleware' => 'auth'], function () use ($router,$resource){
-    $resource('knows','KnowsController');
-    $resource('questions','QuestionController');
-    $resource('examtype','ExamtypeController');
-    $resource('paper','PaperController');
-    $router->get("logout", "TokenController@logout");
+Route::prefix('api')->middleware(['auth:api'])->group(function (){
+    Route::resource('knows','KnowsController');
+    Route::resource('questions','QuestionController');
+    Route::resource('examtype','ExamtypeController');
+    Route::resource('paper','PaperController');
+    Route::post('logout', 'Auth\LoginController@logout');
 });
-$router->group(['prefix' => 'api'], function () use ($router,$resource){
-    $resource("user","UserController");
-    $router->post("token", "TokenController@login");
+Route::prefix('api')->group(function (){
+    Route::post('login', 'Auth\LoginController@login');
+});
+
+Route::middleware(['auth:api'])->group(function (){
+    Route::resource('template','TemplateController');
 });

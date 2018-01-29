@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Layout, Divider } from 'antd';
 import '../../sass/well.css';
 
-export default class paper extends Component {
-    componentDidMount() {
+export default class extends Component {
+    constructor(props) {
+        super(props);
         const id = window.GetQueryString('id');
-        axios.get(`/api/paper/${id}`).then((res) => {
+        axios.get(`/api/paper/${id}?type=dataOnly`).then(res => {
             this.setState(res.data);
         });
     }
@@ -39,7 +40,6 @@ export default class paper extends Component {
                             }
                         })}
                     </div>
-                    {console.log(this.state)}
                 </Layout.Content>
                 <Layout.Footer style={{ textAlign: 'center' }}>
                     出卷人{this.state.user_name}

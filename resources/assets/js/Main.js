@@ -9,6 +9,7 @@ import AddExamtype from './Examtype/Add';
 import ModifyExamtype from './Examtype/Edit';
 import AutoPage from './Paper/Add';
 import Papers from './Paper/Show';
+import UploadFile from './Template/Show';
 
 
 const { Content, Sider } = Layout;
@@ -22,7 +23,7 @@ export default class Main extends Component {
                 this.setState({ data: res.data || true });
             }).catch(error => {
                 if (error.response.status === 401) {
-                    document.location = '/view/login';
+                    // document.location = '/view/login';
                 }
             });
         };
@@ -75,6 +76,7 @@ export default class Main extends Component {
                                         <Route path="/view/addQuestion" component={() => <AddQuestion data={{ stem: '', options: [''], digest: '' }} />} />
                                         <Route path="/view/autoPage" component={() => <AutoPage {...this.state} fetch={this.fetch} />} />
                                         <Route path="/view/papers" component={() => <Papers {...this.state} fetch={this.fetch} />} />
+                                        <Route path="/view/uploadTemplate" component={() => <UploadFile {...this.state} fetch={this.fetch} />} />
                                     </Switch>
                                 </BrowserRouter>
                             </Switch>
