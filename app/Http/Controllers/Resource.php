@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 trait Resource
 {
+
     /**
-     * @param Request $request
-     * @return mixed
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        /**
-         * Display a listing of the resource.
-         *
-         * @return \Illuminate\Http\Response
-         */
-        $results = $request->input("results")?:20;
+        $results = $request->input("results")?:10;
         $sortField = $request->input("sortField")?:"id";
         $sortOrder = $request->input("sortOrder")?:"asc";
-//        var_dump($sortField);
         $ret = $this->modelClass::orderBy($sortField,$sortOrder)->paginate($results);
         $input = $request->only(["results","sortField","sortOrder"]);
         $ret->appends($input);
@@ -49,7 +45,7 @@ trait Resource
      */
     public function show($id)
     {
-        $model = $this->findOrFail($id);
+        $model = $this->modelClass::findOrFail($id);
         foreach ($this->credentials["relations"] as $relation){
             $model->$relation;
         }
@@ -66,7 +62,7 @@ trait Resource
     public function update(Request $request, $id)
     {
         //
-        return $this->save($this->findOrFail($id),$request);
+        return $this->save($this->modelClass::findOrFail($id),$request);
     }
 
     /**
@@ -77,27 +73,16 @@ trait Resource
      */
     public function destroy($id)
     {
-        //
-        $model = $this->findOrFail($id);
+        $model = $this->modelClass::findOrFail($id);
         $model->delete();
         return response(null, 200);
-    }
-
-
-    // firstOrFail automatically return 404,but I dont want to 'cause 404 is for wrong route
-    protected function findOrFail($id){
-        return $this->modelClass::find($id)?:response("资源未找到",400);
     }
 
     protected function save($model, $request){
         $input = $this->input($request);
         $model->update($input['fields']);
         foreach ($input['relations'] as $relationName => $relation){
-            $t = [];
-            foreach ($relation as $record){
-                $t[$record['id']] = array_except($record, ['id']);
-            }
-            $model->$relationName()->sync($t);
+            $model->$relationName()->sync($relation);
         }
         return $model;
     }

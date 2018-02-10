@@ -8,12 +8,12 @@ export default ({ fetch, data }) => {
     }
     return (
         <Upload.Dragger
-            action="/template"
+            action="/api/template"
             defaultFileList={data.map((file, index) => ({
                 uid: index + 1,
                 status: 'done',
                 name: file,
-                url: `/template/${file}?api_token=${window.localStorage.s}`,
+                url: `/api/template/${file}?api_token=${window.localStorage.s}`,
             }))}
             headers={{
                 'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,

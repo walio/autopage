@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,10 +14,10 @@ class Paper extends Model
     ];
 
     public function author() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\User');
     }
 
     public function examtype(){
-        return $this->belongsTo('App\Models\Examtype');
+        return $this->belongsTo('App\Examtype');
     }
 }

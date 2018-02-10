@@ -26,6 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -34,7 +35,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');
     }
 
     public function username()
@@ -49,17 +50,11 @@ class LoginController extends Controller
         $user = $this->guard()->user();
         $t = $this->authenticated($request, $user);
         if ($t){
-            echo "adsfasdfasdfasdf";
             return $t;
         }else{
             $user->api_token = bcrypt($user->name.$user->password);
             $user->save();
             return ["token"=>$user->api_token];
         }
-    }
-
-    public function showLoginForm()
-    {
-        return redirect('/auth/login');
     }
 }

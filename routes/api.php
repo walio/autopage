@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::prefix('api')->group(function (){
+    Route::post('login', 'Auth\LoginController@login');
+//});
+//
+// todo: abstract a register function
+Route::middleware(['auth:api'])->group(function (){
+    Route::apiResource('template','TemplateController')->except('update');
+    Route::apiResource('knows','KnowsController');
+    Route::apiResource('questions','QuestionController');
+    Route::apiResource('examtype','ExamtypeController');
+    Route::apiResource('paper','PaperController');
+    Route::post('logout', 'Auth\LoginController@logout');
 });

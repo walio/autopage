@@ -11,7 +11,7 @@ export default Form.create()(class extends Component {
         this.state = {
             templates: [],
         };
-        axios.get('/template').then(res => {
+        axios.get('/api/template').then(res => {
             this.setState({ templates: res.data });
         });
     }
@@ -53,7 +53,7 @@ export default Form.create()(class extends Component {
                             console.debug('fail in submit, data as follows', values);
                             return;
                         }
-                        loadFile(`/template/${getFieldValue('templateName')}?api_token=${window.localStorage.s}`, (error, content) => {
+                        loadFile(`/api/template/${getFieldValue('templateName')}?api_token=${window.localStorage.s}`, (error, content) => {
                             if (error) { throw error; }
                             console.debug('paper as follow', this.props.paper);
                             saveAs(this.compose(content), 'output.docx');

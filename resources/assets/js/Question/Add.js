@@ -133,8 +133,8 @@ export default Form.create()(({ data, form }) => {
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 10, offset: 1 }}
             >
-                {getFieldDecorator('difficulty_level', {
-                    initialValue: data.difficulty_level,
+                {getFieldDecorator('difficulty', {
+                    initialValue: data.difficulty,
                 })(
                     <Select style={{ width: '100%' }}>
                         <Select.Option value={1}>easy</Select.Option>

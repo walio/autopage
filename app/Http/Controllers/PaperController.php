@@ -1,15 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Examtype;
-use App\Models\Know;
-use App\Models\Paper;
-use App\Models\Question;
+use App\Examtype;
+use App\Paper;
+use App\Question;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
 
 class PaperController extends Controller
 {
@@ -25,7 +22,19 @@ class PaperController extends Controller
         ]
     ];
 
-    protected $modelClass = 'App\Models\Paper';
+
+    /**
+     * 用户存储库的实现。
+     *
+     * @var Paper
+     */
+
+    protected $model;
+
+    public function _construct(Paper $paper) {
+        $this->model = $paper;
+    }
+    protected $modelClass = 'App\Paper';
 
     public function store(Request $request)
     {
@@ -44,8 +53,8 @@ class PaperController extends Controller
         return $paper;
     }
 
-    public function show($id) {
-        $model = $this->findOrFail($id)->toArray();
+    public function show(Paper $paper) {
+        $model = $paper->toArray();
         // todo : do it in a single sql
         foreach ($model['questions'] as $index=>$questionId){
             $q =  Question::find($questionId)->toArray();

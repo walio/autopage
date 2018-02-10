@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\Controller as BaseController;
-
-class ExamtypeController extends BaseController
+class ExamtypeController extends Controller
 {
     use Resource;
+
+    protected $modelClass = 'App\Examtype';
 
     protected $credentials = [
         "fields"=>[
@@ -18,7 +17,4 @@ class ExamtypeController extends BaseController
             'knows'
         ]
     ];
-
-    protected $modelClass = 'App\Models\Examtype';
-
 }

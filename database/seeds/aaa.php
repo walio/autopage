@@ -12,7 +12,6 @@ while ($row = mysqli_fetch_assoc($record)){
     $id = $row['questionid'];
     $stem = format($row['question']);
     $stem = preg_replace("/\r\n/",'',$stem);
-    $stem = json_encode([$stem],JSON_UNESCAPED_UNICODE);
     $type = $row['questiontype'];
     $user = $row['questionuserid'];
     $questring = format($row['questionselect']);
@@ -60,9 +59,14 @@ while ($row = mysqli_fetch_assoc($record)){
     $answer = (int)$row['questionanswer'];
     $digest = format($row['questiondescribe']);
     $status = $row['questionstatus'];
-    $difficulty_level = $row['questionlevel'];
+    $difficulty = $row['questionlevel'];
     $time = $row['questioncreatetime'];
-    $re = mysqli_query($con2, "insert into questions (id,stem,type,user_id,options,answer,digest,status,difficulty_level,reference) values ('$id','$stem','$type','$user','$options','$answer','$digest','$status','$difficulty_level',0)");
+    if($row['questionstatus'] == 1){
+        $re = mysqli_query($con2, "insert into questions (id,stem,type,user_id,options,answer,digest,status,difficulty,reference,deleted_at) values ('$id','$stem','$type','$user','$options','$answer','$digest','$status','$difficulty',0,unix_timestamp())");
+    } else {
+        $re = mysqli_query($con2, "insert into questions (id,stem,type,user_id,options,answer,digest,status,difficulty,reference) values ('$id','$stem','$type','$user','$options','$answer','$digest','$status','$difficulty',0)");
+
+    }
     if($re){
         $tt = mysqli_query($con,"delete from x2_questions where questionid='$id'");
         if(!$tt){

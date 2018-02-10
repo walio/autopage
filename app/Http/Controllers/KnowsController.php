@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Know as KnowsModel;
-use App\Models\KnowAssemble as KnowsAssembleModel;
+use App\Know as KnowsModel;
+use App\KnowAssemble as KnowsAssembleModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\Controller as BaseController;
 
-class KnowsController extends BaseController
+class KnowsController extends Controller
 {
     /**
      * Display a listing of the resource.

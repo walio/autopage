@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Examtype extends Model
     protected $fillable = ['name', 'setting'];
 
     public function knows(){
-        return $this->belongsToMany('App\Models\Know')->select('knows.id','examtype_know.percent');
+        return $this->belongsToMany('App\Know')->select('knows.id','examtype_know.percent');
 
     }
 

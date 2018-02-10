@@ -5,7 +5,9 @@
 ## 安装
 
 composer install 
+
 php artisan key:generate
+
 php artisan migrate
 
 ## 快速开始
@@ -15,7 +17,9 @@ php artisan serve
 ## 开发
 
 php artisan serve
+
 npm install
+
 npm run watch
 
 ## 用户权限
@@ -36,7 +40,6 @@ npm run watch
 
 1. 尽量保证安全，同时保证一定的灵活性，有时候可能会牺牲一点点性能换取安全和一致性（如使用“外键”）
 2. array_map的语义性太差，换成foreach
-3. token其实用laravel自带的authentication就行，为了方便扩展使用了passport
 
 ## todo
 
