@@ -46,10 +46,10 @@ class App extends Component {
                 this.setState({ data: res.data || true });
             });
         };
-        this.state = {
-            data: false,
-        };
     }
+    state = {
+        data: false,
+    };
     render() {
         const menu = (
             <Menu>
